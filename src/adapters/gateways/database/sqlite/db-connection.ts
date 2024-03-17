@@ -13,6 +13,6 @@ export interface DbConnection {
   insert(tableName: string, parameters: DbParams[]): Promise<void>;
   findByLastId(tableName: string): Promise<number>;
   beginTransaction(): Promise<string>
-  commit(): Promise<string>
-  rollback(): Promise<string>
+  commit(): Promise<void>
+  rollback(): Promise<void>
 }

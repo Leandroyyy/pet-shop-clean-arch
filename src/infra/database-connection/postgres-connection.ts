@@ -14,14 +14,24 @@ export class SqliteConnection implements DbConnection {
     this._dsn = dsn;
   }
   
-  beginTransaction(): Promise<string> {
-    throw new Error("Method not implemented.");
+  async beginTransaction(): Promise<string> {
+    const connection = await this.openDatabase();
+
+    const transactionId = await connection.all('BEGIN TRANSACTION;')
+
+    return transactionId[0]
   }
-  commit(): Promise<string> {
-    throw new Error("Method not implemented.");
+
+  async commit(): Promise<void> {
+    const connection = await this.openDatabase();
+
+    await connection.all('COMMIT;')
   }
-  rollback(): Promise<string> {
-    throw new Error("Method not implemented.");
+
+  async rollback(): Promise<void> {
+    const connection = await this.openDatabase();
+
+    await connection.all('ROLLBACK;')
   }
 
   private async openDatabase() {
