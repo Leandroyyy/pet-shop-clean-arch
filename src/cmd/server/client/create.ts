@@ -2,7 +2,7 @@ import { Router } from "express";
 import { CreateClientController } from "../../../adapters/controllers/create-client";
 import { SqliteClientRepository } from "../../../adapters/gateways/database/sqlite/client/sqlite-client-repository";
 import { CreateClientUseCase } from "../../../domain/application/use-cases/create-client";
-import { SqliteConnection } from "../../../infra/database-connection/postgres-connection";
+import { SqliteConnection } from "../../../infra/database-connection/sqlite-connection";
 
 const createClientRoute = Router();
 
