@@ -1,6 +1,5 @@
-import { Request, Response } from "express";
-import { CreateClientUseCase } from "../../domain/application/use-cases/create-client";
-import { ConflictError } from "../../domain/enterprise/errors/conflict";
+import { ServerResponse } from 'http';
+import { CreateClientUseCase } from "../../core/pet-shop/application/use-cases/create-client";
 import { DbConnection } from "../gateways/database/sqlite/db-connection";
 
 export class CreateClientController {
@@ -9,9 +8,8 @@ export class CreateClientController {
     private dbConnection: DbConnection
   ) {}
 
-  async execute(request: Request, response: Response): Promise<Response> {
+  async execute(request:Request, response :ServerResponse): Promise<ServerResponse> {
     try {
-      const { body } = request;
 
       await this.dbConnection.beginTransaction();
 
@@ -23,15 +21,7 @@ export class CreateClientController {
     } catch (error) {
       await this.dbConnection.rollback();
 
-      if (error instanceof ConflictError) {
-        return response.status(409).json({
-          message: error.message,
-        });
-      }
-
-      return response.status(500).json({
-        message: "Unexpected error",
-      });
+      
     }
   }
 }

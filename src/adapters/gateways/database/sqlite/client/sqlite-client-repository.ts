@@ -1,5 +1,5 @@
-import { ClientRepository } from "../../../../../domain/application/repositories/client-repository";
-import { Client } from "../../../../../domain/enterprise/entities/client";
+import { ClientRepository } from "../../../../../core/pet-shop/application/repositories/client-repository";
+import { Client } from "../../../../../core/pet-shop/enterprise/entities/client";
 import { DbConnection, DbParams } from "../db-connection";
 
 export class SqliteClientRepository implements ClientRepository {
