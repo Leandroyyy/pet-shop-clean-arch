@@ -1,5 +1,5 @@
-import { ServerResponse } from 'http';
-import { CreateClientUseCase } from "../../core/pet-shop/application/use-cases/create-client";
+import { ServerResponse } from "http";
+import { CreateClientUseCase } from "../../core/pet-shop/application/use-cases/register-owner";
 import { DbConnection } from "../gateways/database/sqlite/db-connection";
 
 export class CreateClientController {
@@ -8,9 +8,11 @@ export class CreateClientController {
     private dbConnection: DbConnection
   ) {}
 
-  async execute(request:Request, response :ServerResponse): Promise<ServerResponse> {
+  async execute(
+    request: Request,
+    response: ServerResponse
+  ): Promise<ServerResponse> {
     try {
-
       await this.dbConnection.beginTransaction();
 
       const client = await this.createClientUseCase.execute(body);
@@ -20,8 +22,6 @@ export class CreateClientController {
       return response.status(200).json(client);
     } catch (error) {
       await this.dbConnection.rollback();
-
-      
     }
   }
 }

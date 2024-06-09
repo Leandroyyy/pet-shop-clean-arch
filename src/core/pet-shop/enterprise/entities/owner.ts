@@ -1,7 +1,7 @@
 import { Entity } from "../../../commons/entity";
 import { Pet } from "./pet";
 
-interface ClientProps {
+interface OwnerProps {
   name: string;
   document: string;
   birthday: Date;
@@ -9,11 +9,11 @@ interface ClientProps {
   pets?: Pet[];
 }
 
-export class Client extends Entity<ClientProps> {
-  static create(props: ClientProps, id?: string) {
-    const client = new Client({ ...props, pets: props.pets ?? [] }, id);
+export class Owner extends Entity<OwnerProps> {
+  static create(props: OwnerProps, id?: string) {
+    const owner = new Owner({ ...props, pets: props.pets ?? [] }, id);
 
-    return client;
+    return owner;
   }
 
   get name() {
@@ -30,5 +30,9 @@ export class Client extends Entity<ClientProps> {
 
   get email() {
     return this.props.email;
+  }
+
+  registerPet(pet: Pet) {
+    this.props.pets?.push(pet);
   }
 }
