@@ -1,37 +1,40 @@
 import { open } from "sqlite";
-import sqlite3 from 'sqlite3';
-import { DbConnection, DbParams } from "../../adapters/gateways/database/sqlite/db-connection";
+import sqlite3 from "sqlite3";
+import {
+  DbParams,
+  SqlDbConnection,
+} from "../../adapters/gateways/database/sql/db-connection";
 
 interface Parameters {
   restriction: string;
   values: any[];
 }
 
-export class SqliteConnection implements DbConnection {
+export class SqliteConnection implements SqlDbConnection {
   private _dsn: string;
 
   constructor(dsn: string) {
     this._dsn = dsn;
   }
-  
+
   async beginTransaction(): Promise<string> {
     const connection = await this.openDatabase();
 
-    const transactionId = await connection.all('BEGIN TRANSACTION;')
+    const transactionId = await connection.all("BEGIN TRANSACTION;");
 
-    return transactionId[0]
+    return transactionId[0];
   }
 
   async commit(): Promise<void> {
     const connection = await this.openDatabase();
 
-    await connection.all('COMMIT;')
+    await connection.all("COMMIT;");
   }
 
   async rollback(): Promise<void> {
     const connection = await this.openDatabase();
 
-    await connection.all('ROLLBACK;')
+    await connection.all("ROLLBACK;");
   }
 
   private async openDatabase() {

@@ -1,11 +1,11 @@
 import { ServerResponse } from "http";
 import { CreateClientUseCase } from "../../core/pet-shop/application/use-cases/register-owner";
-import { DbConnection } from "../gateways/database/sqlite/db-connection";
+import { SqlDbConnection } from "../gateways/database/sql/db-connection";
 
 export class CreateClientController {
   constructor(
     private createClientUseCase: CreateClientUseCase,
-    private dbConnection: DbConnection
+    private dbConnection: SqlDbConnection
   ) {}
 
   async execute(
