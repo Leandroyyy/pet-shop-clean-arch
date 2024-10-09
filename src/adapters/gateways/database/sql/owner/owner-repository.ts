@@ -1,18 +1,14 @@
-import { OwnerRepository } from "../../../../../core/pet-shop/application/repositories/owner-repository";
-import { Owner } from "../../../../../core/pet-shop/enterprise/entities/owner";
-import { DbParams, SqlDbConnection } from "../db-connection";
+import { OwnerRepository } from "../../../../../domain/pet-shop/application/repositories/owner-repository";
+import { Owner } from "../../../../../domain/pet-shop/enterprise/entities/owner";
+import { DatabaseSource, DbParams } from "../database-source";
 import { OwnerDbSchema } from "./dtos/owner-db-schema";
 
-export class SqlOwnerRepository implements OwnerRepository {
-  private tableName = "clients";
-
-  constructor(private connection: SqlDbConnection) {}
+export class OwnerRepositoryGateway implements OwnerRepository {
+  constructor(private databaseSource: DatabaseSource<OwnerDbSchema>) {}
 
   async findyById(id: string): Promise<Owner | null> {
-    const data = await this.connection.searchByParameters<OwnerDbSchema>(
-      this.tableName,
-      null,
-      [{ field: "id", value: id }]
+    const data = await this.databaseSource.searchByParameters(
+      [{field: "id", value: id}]
     );
 
     if (!data || !data.length) {
@@ -39,13 +35,11 @@ export class SqlOwnerRepository implements OwnerRepository {
     parameters.push({ field: "birthday", value: owner.birthday.toString() });
     parameters.push({ field: "document", value: owner.document });
 
-    await this.connection.update(this.tableName, parameters);
+    await this.databaseSource.update(parameters);
   }
 
   async findByDocument(document: string): Promise<Owner | null> {
-    const data = await this.connection.searchByParameters<OwnerDbSchema>(
-      this.tableName,
-      null,
+    const data = await this.databaseSource.searchByParameters(
       [{ field: "document", value: document }]
     );
 
@@ -73,6 +67,6 @@ export class SqlOwnerRepository implements OwnerRepository {
     parameters.push({ field: "birthday", value: owner.birthday.toString() });
     parameters.push({ field: "document", value: owner.document });
 
-    await this.connection.insert(this.tableName, parameters);
+    await this.databaseSource.insert(parameters);
   }
 }
