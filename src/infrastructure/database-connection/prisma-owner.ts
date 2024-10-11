@@ -1,9 +1,9 @@
-import { OwnerDbSchema } from "@/adapters/gateways/database/sql/owner/dtos/owner-db-schema";
+import { OwnerDbSchema } from "@/adapters/gateways/database/owner/dtos/owner-db-schema";
 import { PrismaClient } from "@prisma/client";
 import {
   DatabaseSource,
   DbParams,
-} from "../../adapters/gateways/database/sql/database-source";
+} from "../../adapters/gateways/database/database-source";
 
 export class PrismaOwnerDatabaseConnection
   implements DatabaseSource<OwnerDbSchema>
@@ -41,17 +41,7 @@ export class PrismaOwnerDatabaseConnection
   async update(parameters: DbParams<OwnerDbSchema>[]): Promise<void> {
     const params = this.convertSchema(parameters);
 
-    let petsIds = [] as { id: string }[];
-    
-    if (params.petIds?.length) {
-
-      params.petIds.forEach((id) => {
-        petsIds.push({
-          id
-        })
-      })
-
-    }
+    const petsIds = params.petIds?.map((id: string) => ({ id })) || [];
 
     await this.prisma.owner.update({
       where: {

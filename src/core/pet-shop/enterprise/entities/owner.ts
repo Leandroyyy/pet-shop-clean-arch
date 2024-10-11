@@ -33,6 +33,6 @@ export class Owner extends Entity<OwnerProps> {
   }
 
   registerPet(pet: Pet) {
-    this.props.pets?.push(pet);
+    this.props.pets!.push(pet);
   }
 }

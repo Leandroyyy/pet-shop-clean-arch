@@ -1,5 +1,5 @@
-import { NotFoundError } from "@/domain/commons/errors/not-found";
-import { RegisterOwnerUseCase } from "@/domain/pet-shop/application/use-cases/register-owner";
+import { NotFoundError } from "@/core/commons/errors/not-found";
+import { RegisterOwnerUseCase } from "@/core/pet-shop/application/use-cases/register-owner";
 import { HttpRequest } from "../request";
 import { HttpResponse } from "../response";
 import { Validator } from "../validator";
