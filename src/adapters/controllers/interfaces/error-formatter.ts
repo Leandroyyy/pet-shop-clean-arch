@@ -15,9 +15,7 @@ errorMap.set(ConflictError.prototype.code, {
 });
 
 export class ErrorFormatter {
-  static handle(
-    error: Error & { code: number }
-  ): Response<any> {
+  static handle(error: Error & { code: number }): Response<any> {
     const errorInfo = errorMap.get(error.code);
 
     if (errorInfo) {
@@ -28,7 +26,7 @@ export class ErrorFormatter {
     }
 
     return {
-      body: { message: "Unexpected error occurred" },
+      body: [{ message: "Unexpected error occurred" }],
       code: 500,
     };
   }

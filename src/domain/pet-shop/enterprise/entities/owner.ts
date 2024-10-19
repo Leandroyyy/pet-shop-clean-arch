@@ -1,16 +1,17 @@
+import { Optional } from "@/domain/commons/optional";
 import { Entity } from "../../../commons/entity";
 import { Pet } from "./pet";
 
-interface OwnerProps {
+export interface OwnerProps {
   name: string;
   document: string;
   birthday: Date;
   email: string;
-  pets?: Pet[];
+  pets: Pet[];
 }
 
 export class Owner extends Entity<OwnerProps> {
-  static create(props: OwnerProps, id?: string) {
+  static create(props: Optional<OwnerProps, "pets">, id?: string) {
     const owner = new Owner({ ...props, pets: props.pets ?? [] }, id);
 
     return owner;
@@ -33,10 +34,10 @@ export class Owner extends Entity<OwnerProps> {
   }
 
   get pets() {
-    return this.props.pets
+    return this.props.pets;
   }
 
   registerPet(pet: Pet) {
-    this.props.pets!.push(pet);
+    this.props.pets.push(pet);
   }
 }

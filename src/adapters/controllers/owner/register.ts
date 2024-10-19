@@ -1,4 +1,3 @@
-import { ValidationError } from "@/domain/commons/errors/validation";
 import {
   RegisterOwnerUseCase,
   RegisterOwnerUseCaseRequest,
@@ -22,7 +21,10 @@ export class RegisterOwnerController {
       const { data, errors } = this.validator.execute(body);
 
       if (errors?.length) {
-        throw new ValidationError(errors);
+        return {
+          code: 400,
+          body: errors
+        }
       }
 
       const owner = await this.registerOwnerUseCase.execute(data);

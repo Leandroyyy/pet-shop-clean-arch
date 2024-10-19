@@ -4,9 +4,8 @@ import { PetType } from "./pet-type";
 interface PetProps {
   name: string;
   birthday: Date;
-  species: string;
   breed: string;
-  gender: string;
+  gender: "male" | "female";
   type: PetType;
 }
 
@@ -23,5 +22,17 @@ export class Pet extends Entity<PetProps> {
 
   get birthday() {
     return this.props.birthday;
+  }
+
+  get breed() {
+    return this.props.breed;
+  }
+
+  get gender() {
+    return this.props.gender;
+  }
+
+  get type() {
+    return this.props.type;
   }
 }
