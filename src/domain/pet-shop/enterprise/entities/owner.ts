@@ -32,6 +32,10 @@ export class Owner extends Entity<OwnerProps> {
     return this.props.email;
   }
 
+  get pets() {
+    return this.props.pets
+  }
+
   registerPet(pet: Pet) {
     this.props.pets!.push(pet);
   }

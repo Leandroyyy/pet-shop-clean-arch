@@ -1,5 +1,5 @@
-import { OwnerRepository } from "../../../../domain/pet-shop/application/repositories/owner-repository";
-import { Owner } from "../../../../domain/pet-shop/enterprise/entities/owner";
+import { OwnerRepository } from "@/domain/pet-shop/application/repositories/owner-repository";
+import { Owner } from '@/domain/pet-shop/enterprise/entities/owner';
 import { DatabaseSource, DbParams } from "../database-source";
 import { OwnerDbSchema } from "./dtos/owner-db-schema";
 

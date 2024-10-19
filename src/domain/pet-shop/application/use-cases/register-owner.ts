@@ -2,7 +2,7 @@ import { ConflictError } from "../../../commons/errors/conflict";
 import { Owner } from "../../enterprise/entities/owner";
 import { OwnerRepository } from "../repositories/owner-repository";
 
-interface RegisterOwnerUseCaseRequest {
+export interface RegisterOwnerUseCaseRequest {
   name: string;
   document: string;
   birthday: string;
