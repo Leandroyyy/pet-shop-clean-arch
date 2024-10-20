@@ -1,9 +1,9 @@
-import { NotificationBodySchema } from "@/adapters/gateways/publisher/notification/dtos/notification-body-schema";
-import { NotificationHeaderSchema } from "@/adapters/gateways/publisher/notification/dtos/notification-header-schema";
+import { NotificationBodySchema } from "@/adapters/gateways/publishers/notification/dtos/notification-body-schema";
+import { NotificationHeaderSchema } from "@/adapters/gateways/publishers/notification/dtos/notification-header-schema";
 import {
   PublisherParams,
   PublisherSource,
-} from "@/adapters/gateways/publisher/publisher-source";
+} from "@/adapters/gateways/publishers/publisher-source";
 import { ConvertSchema } from "@/infrastructure/helpers/convert-schema";
 import Mailjet from "node-mailjet";
 

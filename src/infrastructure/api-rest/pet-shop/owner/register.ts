@@ -1,7 +1,7 @@
 import { RegisterOwnerController } from "@/adapters/controllers/owner/register";
-import { NotificationRepositoryGateway } from "@/adapters/gateways/database/notification/notification-repository";
-import { OwnerRepositoryGateway } from "@/adapters/gateways/database/owner/owner-repository";
-import { NotificationPublisherGateway } from "@/adapters/gateways/publisher/notification/notification-publisher";
+import { NotificationRepositoryGateway } from "@/adapters/gateways/databases/notification/notification-repository";
+import { OwnerRepositoryGateway } from "@/adapters/gateways/databases/owner/owner-repository";
+import { NotificationPublisherGateway } from "@/adapters/gateways/publishers/notification/notification-publisher";
 import { OwnerPresenter } from "@/adapters/presenters/owner";
 import { SendNotificationUseCase } from "@/domain/notification/application/use-cases/send-notification";
 import {

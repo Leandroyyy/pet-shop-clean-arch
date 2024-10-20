@@ -1,8 +1,8 @@
 import {
   DatabaseSource,
   DbParams,
-} from "@/adapters/gateways/database/database-source";
-import { NotificationDbSchema } from "@/adapters/gateways/database/notification/dtos/notification-db-schema";
+} from "@/adapters/gateways/databases/database-source";
+import { NotificationDbSchema } from "@/adapters/gateways/databases/notification/dtos/notification-db-schema";
 import { ConvertSchema } from "@/infrastructure/helpers/convert-schema";
 import { PrismaClient } from "@prisma/client";
 

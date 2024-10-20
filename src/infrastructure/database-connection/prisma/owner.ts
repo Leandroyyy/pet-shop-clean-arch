@@ -1,8 +1,8 @@
 import {
   DatabaseSource,
   DbParams,
-} from "@/adapters/gateways/database/database-source";
-import { OwnerDbSchema } from "@/adapters/gateways/database/owner/dtos/owner-db-schema";
+} from "@/adapters/gateways/databases/database-source";
+import { OwnerDbSchema } from "@/adapters/gateways/databases/owner/dtos/owner-db-schema";
 import { ConvertSchema } from "@/infrastructure/helpers/convert-schema";
 import { PrismaClient } from "@prisma/client";
 

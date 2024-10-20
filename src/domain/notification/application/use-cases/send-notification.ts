@@ -1,5 +1,5 @@
 import { Notification } from "../../enterprise/entities/notification";
-import { NotificationPublisher } from "../publisher/notification";
+import { NotificationPublisher } from "../publishers/notification";
 import { NotificationRepository } from "../repositories/notification-repository";
 
 interface SendNotificationUseCaseRequest {

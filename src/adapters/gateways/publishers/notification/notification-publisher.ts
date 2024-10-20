@@ -1,4 +1,4 @@
-import { NotificationPublisher } from "@/domain/notification/application/publisher/notification";
+import { NotificationPublisher } from "@/domain/notification/application/publishers/notification";
 import { Notification } from "@/domain/notification/enterprise/entities/notification";
 import { PublisherParams, PublisherSource } from "../publisher-source";
 import { NotificationBodySchema } from "./dtos/notification-body-schema";

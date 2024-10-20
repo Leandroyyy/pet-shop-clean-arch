@@ -1,5 +1,5 @@
 import { mock } from "jest-mock-extended";
-import { NotificationPublisher } from "../publisher/notification";
+import { NotificationPublisher } from "../publishers/notification";
 import { NotificationRepository } from "../repositories/notification-repository";
 import { SendNotificationUseCase } from "./send-notification";
 
