@@ -1,4 +1,4 @@
-import { NotFoundError } from "../../../commons/errors/not-found";
+import { NotFoundError } from "@/domain/commons/errors/not-found";
 import { Pet } from "../../enterprise/entities/pet";
 import { PetType } from "../../enterprise/entities/pet-type";
 import { OwnerRepository } from "../repositories/owner-repository";

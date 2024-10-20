@@ -1,15 +1,16 @@
-import { Entity } from "../../../commons/entity";
+import { Entity } from "@/domain/commons/entity";
+import { Optional } from "@/domain/commons/optional";
 
 export interface NotificationProps {
-  recipientId: string;
+  recipientEmail: string;
   title: string;
   content: string;
   readAt?: Date;
-  createdAt?: Date;
+  createdAt: Date;
 }
 
 export class Notification extends Entity<NotificationProps> {
-  static create(props: NotificationProps, id?: string) {
+  static create(props: Optional<NotificationProps, "createdAt">, id?: string) {
     const notification = new Notification(
       {
         ...props,
@@ -21,8 +22,8 @@ export class Notification extends Entity<NotificationProps> {
     return notification;
   }
 
-  get recipientId() {
-    return this.props.recipientId;
+  get recipientEmail() {
+    return this.props.recipientEmail;
   }
 
   get title() {
@@ -39,9 +40,5 @@ export class Notification extends Entity<NotificationProps> {
 
   get createdAt() {
     return this.props.createdAt;
-  }
-
-  read() {
-    this.props.readAt = new Date();
   }
 }

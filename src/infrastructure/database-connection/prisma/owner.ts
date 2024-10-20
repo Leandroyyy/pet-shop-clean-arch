@@ -1,9 +1,10 @@
-import { OwnerDbSchema } from "@/adapters/gateways/database/owner/dtos/owner-db-schema";
-import { PrismaClient } from "@prisma/client";
 import {
   DatabaseSource,
   DbParams,
-} from "../../adapters/gateways/database/database-source";
+} from "@/adapters/gateways/database/database-source";
+import { OwnerDbSchema } from "@/adapters/gateways/database/owner/dtos/owner-db-schema";
+import { ConvertSchema } from "@/infrastructure/helpers/convert-schema";
+import { PrismaClient } from "@prisma/client";
 
 export class PrismaOwnerDatabaseConnection
   implements DatabaseSource<OwnerDbSchema>
@@ -13,7 +14,7 @@ export class PrismaOwnerDatabaseConnection
   async searchByParameters(
     parameters: DbParams<OwnerDbSchema>[]
   ): Promise<OwnerDbSchema[]> {
-    const params = this.convertSchema(parameters);
+    const params = ConvertSchema.toSchema(parameters);
 
     const owner = await this.prisma.owner.findMany({
       where: {
@@ -25,7 +26,7 @@ export class PrismaOwnerDatabaseConnection
   }
 
   async insert(parameters: DbParams<OwnerDbSchema>[]): Promise<void> {
-    const params = this.convertSchema(parameters);
+    const params = ConvertSchema.toSchema(parameters);
 
     await this.prisma.owner.create({
       data: {
@@ -39,7 +40,7 @@ export class PrismaOwnerDatabaseConnection
   }
 
   async update(parameters: DbParams<OwnerDbSchema>[]): Promise<void> {
-    const params = this.convertSchema(parameters);
+    const params = ConvertSchema.toSchema(parameters);
 
     const petsIds = params.petIds?.map((id: string) => ({ id })) || [];
 
@@ -58,16 +59,5 @@ export class PrismaOwnerDatabaseConnection
         },
       },
     });
-  }
-
-  private convertSchema(parameters: DbParams<OwnerDbSchema>[]): OwnerDbSchema {
-    const params: OwnerDbSchema = parameters.reduce((acc, data) => {
-      return {
-        ...acc,
-        [data.field]: data.value,
-      };
-    }, {} as OwnerDbSchema);
-
-    return params;
   }
 }

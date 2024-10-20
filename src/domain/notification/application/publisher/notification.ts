@@ -1,5 +1,5 @@
 import { Notification } from "../../enterprise/entities/notification";
 
-export interface NotificationRepository {
+export interface NotificationPublisher {
   save(notification: Notification): Promise<void>;
 }

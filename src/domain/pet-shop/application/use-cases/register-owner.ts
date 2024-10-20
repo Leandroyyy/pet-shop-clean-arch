@@ -1,4 +1,4 @@
-import { ConflictError } from "../../../commons/errors/conflict";
+import { ConflictError } from "@/domain/commons/errors/conflict";
 import { Owner } from "../../enterprise/entities/owner";
 import { OwnerRepository } from "../repositories/owner-repository";
 

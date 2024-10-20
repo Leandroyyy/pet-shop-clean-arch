@@ -1,3 +1,4 @@
+import { SendNotificationUseCase } from "@/domain/notification/application/use-cases/send-notification";
 import {
   RegisterOwnerUseCase,
   RegisterOwnerUseCaseRequest,
@@ -11,6 +12,7 @@ import { SchemaValidator } from "../interfaces/schema-validator";
 export class RegisterOwnerController {
   constructor(
     private registerOwnerUseCase: RegisterOwnerUseCase,
+    private sendNotificationUseCase: SendNotificationUseCase,
     private validator: SchemaValidator<RegisterOwnerUseCaseRequest>
   ) {}
 
@@ -23,11 +25,17 @@ export class RegisterOwnerController {
       if (errors?.length) {
         return {
           code: 400,
-          body: errors
-        }
+          body: errors,
+        };
       }
 
       const owner = await this.registerOwnerUseCase.execute(data);
+
+      await this.sendNotificationUseCase.execute({
+        title: "Petshop Register",
+        content: `Thanks for your registration here in our petshop ${owner.name}`,
+        recipientEmail: owner.email,
+      });
 
       return {
         body: owner,

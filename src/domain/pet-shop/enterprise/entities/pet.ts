@@ -1,4 +1,4 @@
-import { Entity } from "../../../commons/entity";
+import { Entity } from "@/domain/commons/entity";
 import { PetType } from "./pet-type";
 
 interface PetProps {
