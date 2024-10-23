@@ -5,12 +5,24 @@ import {
   PublisherSource,
 } from "@/adapters/gateways/publishers/publisher-source";
 import { ConvertSchema } from "@/infrastructure/helpers/convert-schema";
-import Mailjet from "node-mailjet";
+import nodemailer, { Transporter } from "nodemailer";
 
-export class MailJetNotificationPublisher
+export class NodeMailerPublisher
   implements PublisherSource<NotificationBodySchema, NotificationHeaderSchema>
 {
-  constructor(private mailjet: Mailjet, private sender: string) {}
+  private transporter: Transporter;
+
+  constructor(private user: string, private pass: string) {
+    this.transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 405,
+      service: "gmail",
+      auth: {
+        user: this.user,
+        pass: this.pass,
+      },
+    });
+  }
 
   async publish(
     body: PublisherParams<NotificationBodySchema>[],
@@ -19,22 +31,11 @@ export class MailJetNotificationPublisher
     const bodyParams = ConvertSchema.toSchema(body);
     const headersParams = ConvertSchema.toSchema(headers);
 
-    await this.mailjet.post("send", { version: "v3.1" }).request({
-      Messages: [
-        {
-          From: {
-            Email: this.sender,
-            Name: "PetShopPlace",
-          },
-          To: [
-            {
-              Email: bodyParams.recipientEmail,
-            },
-          ],
-          Subject: bodyParams.title,
-          TextPart: bodyParams.content,
-        },
-      ],
+    this.transporter.sendMail({
+      from: `<${this.user}>`,
+      to: bodyParams.recipientEmail,
+      subject: bodyParams.title,
+      text: bodyParams.content,
     });
   }
 }

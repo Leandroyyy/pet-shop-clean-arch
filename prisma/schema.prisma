@@ -23,15 +23,14 @@ model Owner {
 }
 
 model Pet {
-  id       String @id @default(uuid())
+  id       String   @id @default(uuid())
   name     String
-  birthday String
-  species  String
+  birthday DateTime
   breed    String
   gender   String
   type     String
-  owner    Owner  @relation(fields: [ownerId], references: [id])
-  ownerId  String
+  owner    Owner?   @relation(fields: [ownerId], references: [id])
+  ownerId  String?
 
   @@map("pets")
 }

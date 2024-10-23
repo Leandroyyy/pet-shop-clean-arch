@@ -4,7 +4,7 @@ import { PetType } from "../../enterprise/entities/pet-type";
 import { OwnerRepository } from "../repositories/owner-repository";
 import { PetRepository } from "../repositories/pet-repository";
 
-interface RegisterPetUseCaseRequest {
+export interface RegisterPetUseCaseRequest {
   ownerId: string;
   name: string;
   birthday: string;

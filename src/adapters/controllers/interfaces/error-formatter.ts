@@ -1,4 +1,5 @@
 import { ConflictError } from "@/domain/commons/errors/conflict";
+import { NotFoundError } from "@/domain/commons/errors/not-found";
 import { Response } from "./response";
 
 const errorMap = new Map<
@@ -9,25 +10,28 @@ const errorMap = new Map<
   }
 >();
 
-errorMap.set(ConflictError.prototype.code, {
-  code: ConflictError.prototype.code,
-  message: ConflictError.prototype.message,
-});
+type ErrorMapping = [new (...args: any[]) => Error, number];
 
 export class ErrorFormatter {
-  static handle(error: Error & { code: number }): Response<any> {
-    const errorInfo = errorMap.get(error.code);
+  private static errorMap: ErrorMapping[] = [
+    [NotFoundError, 404],
+    [ConflictError, 409],
+  ];
 
-    if (errorInfo) {
-      return {
-        body: { message: errorInfo.message },
-        code: errorInfo.code,
-      };
+  static handle(error: Error & { code: number }): Response<any> {
+    const foundError = this.errorMap.find(
+      ([ErrorClass]) => error instanceof ErrorClass
+    );
+    const code = foundError ? foundError[1] : 500;
+    let { message } = error;
+
+    if (code === 500) {
+      message = "Unexpected Error";
     }
 
     return {
-      body: [{ message: "Unexpected error occurred" }],
-      code: 500,
+      body: [{ message }],
+      code,
     };
   }
 }

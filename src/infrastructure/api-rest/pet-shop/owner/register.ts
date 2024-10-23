@@ -11,12 +11,11 @@ import {
 import { Owner } from "@/domain/pet-shop/enterprise/entities/owner";
 import { PrismaNotificationDatabaseConnection } from "@/infrastructure/database-connection/prisma/notification";
 import { PrismaOwnerDatabaseConnection } from "@/infrastructure/database-connection/prisma/owner";
-import { MailJetNotificationPublisher } from "@/infrastructure/publishers/mail-jet/notification";
+import { NodeMailerPublisher } from "@/infrastructure/publishers/nodemailer/notification";
 import { JoiSchemaValidator } from "@/infrastructure/validation/joi/schema-validator";
 import { registerOwnerSchema } from "@/infrastructure/validation/joi/schemas/register-owner";
 import { PrismaClient } from "@prisma/client";
 import { Request, Response, Router } from "express";
-import Mailjet from "node-mailjet";
 
 const registerOwner = Router();
 
@@ -32,13 +31,12 @@ const schemaValidator = new JoiSchemaValidator<RegisterOwnerUseCaseRequest>(
   registerOwnerSchema
 );
 
-const mailJet = new Mailjet({});
-const mailJetNotificationPublisher = new MailJetNotificationPublisher(
-  mailJet,
-  ""
+const nodeMailerPublisher = new NodeMailerPublisher(
+  process.env.EMAIL_SENDER as string,
+  process.env.PASS_EMAIL_SENDER as string
 );
 const notificationPublisher = new NotificationPublisherGateway(
-  mailJetNotificationPublisher
+  nodeMailerPublisher
 );
 const prismaNotificationDatabaseConnection =
   new PrismaNotificationDatabaseConnection(prismaClient);
@@ -63,13 +61,12 @@ registerOwner.post("/", async (request: Request, response: Response) => {
     params: request.params,
   });
 
-  if ("message" in body && typeof body.message === "string") {
-    return response.status(code).send(body);
+  if (body instanceof Owner) {
+    const presenter = OwnerPresenter.toJSON(body);
+    return response.status(code).send(presenter);
   }
 
-  const bodyResponse = OwnerPresenter.toJSON(body as Owner);
-
-  return response.status(code).send(bodyResponse);
+  return response.status(code).send(body);
 });
 
 export { registerOwner };
