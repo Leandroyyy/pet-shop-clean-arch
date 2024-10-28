@@ -29,9 +29,8 @@ export class NodeMailerPublisher
     headers: PublisherParams<NotificationHeaderSchema>[]
   ): Promise<void> {
     const bodyParams = ConvertSchema.toSchema(body);
-    const headersParams = ConvertSchema.toSchema(headers);
 
-    this.transporter.sendMail({
+    await this.transporter.sendMail({
       from: `<${this.user}>`,
       to: bodyParams.recipientEmail,
       subject: bodyParams.title,

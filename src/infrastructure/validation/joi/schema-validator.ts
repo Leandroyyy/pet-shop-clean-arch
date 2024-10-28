@@ -1,4 +1,7 @@
-import { SchemaValidator, SchemaValidatorErrors } from "@/adapters/controllers/interfaces/schema-validator";
+import {
+  SchemaValidator,
+  SchemaValidatorErrors,
+} from "@/adapters/controllers/interfaces/schema-validator";
 import { Schema } from "joi";
 
 export class JoiSchemaValidator<T> implements SchemaValidator<T> {
