@@ -11,7 +11,7 @@ module.exports = {
   modulePathIgnorePatterns: ["<rootDir>/dist"],
   coveragePathIgnorePatterns: [],
   coverageReporters: ["lcov", "text", "text-summary"],
-  moduleDirectories: ["node_modules", "src"],
+  moduleDirectories: ["node_modules", "src", "test"],
   collectCoverage: false,
   collectCoverageFrom: ["src/**/*.{js,ts}"],
   coverageThreshold: {

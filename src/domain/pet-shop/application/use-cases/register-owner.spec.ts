@@ -26,4 +26,26 @@ describe("Register Owner", () => {
       })
     ).rejects.toThrow("Email already exists");
   });
+
+  it("should be able to create an owner", async () => {
+    ownerRepository.findByDocument.mockResolvedValue(null);
+
+    const owner = await registerOwnerUseCase.execute({
+      birthday: "2000-10-20",
+      document: "123123213",
+      email: "john@due.com",
+      name: "johndue",
+    });
+
+    expect(owner).toEqual({
+      _id: expect.any(String),
+      props: {
+        birthday: new Date("2000-10-20T00:00:00.000Z"),
+        document: "123123213",
+        email: "john@due.com",
+        name: "johndue",
+        pets: [],
+      },
+    });
+  });
 });
